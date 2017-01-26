@@ -1,0 +1,392 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+@import url(https://fonts.googleapis.com/css?family=Lobster);
+
+body {
+    margin: 0;
+    /* Przykladowo jesli przytrzyma sie palec na ekranie przez kilka sekund,
+    na obrazie lub linku pojawi sie male menu kontekstowe, ktore da uzystkownikowi mozliwosc uzycia odnosnika,
+    zapisania obrazu itd. Nastepujaca wlasciwosc CSS je wylacza. */
+    -webkit-touch-callout: none;
+    /* Przegladarka Androida podswietla interaktywne elementy po kliknieciu ich.
+     Podswietlacz mozna usunac, zmieniajac jego barwe na przezroczysta. */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    /* W niektorych przypadkach, np. przy zmianie orientacji, przegladarka automatycznie zmieni rozmiar tekstu,
+     aby dopasowac go do dostepnej przestrzeni. Lepiej zachowac tak duza kontrole nad wygladem gry,
+     jak to tylko mozliwe, zatem wylaczone jest automatycznie dopasowywanie za pomoca nastepujacej reguly. */
+    -webkit-text-size-adjust: none;
+    /* W podobny sposob wylacza sie opcje zaznaczania tekstu lub obrazow. */
+    -webkit-user-select: none;
+    font-family: "Montserrat", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+#fbad{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+}
+
+#closebutton{
+  cursor: pointer;
+  background-color: rgb(50, 50, 100);
+  width: 60%;
+  margin:50px auto;
+  padding:10px;
+  font: bold 14px Arial;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+#game {
+    font-size: 40px;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(30, 30, 30);
+    color: rgb(100, 200, 200);
+}
+
+
+/* W dalszym etapie ta klasa przyda sie do sterowania rozmiarem planszy. */
+.jewel-size {
+    font-size: 40px;
+}
+
+#jewel-proto {
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    left: -1000px;
+}
+
+#game .screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 10;
+}
+
+
+#game .screen.active {
+    display: block;
+}
+
+
+#splash-screen {
+    text-align: center;
+    padding-top: 2.5em;
+}
+
+#splash-screen .continue {
+    cursor: pointer;
+    font-size: 0.75em;
+    display: none;
+}
+
+.logo {
+    font-size: 1.1em;
+    line-height: 0.9em;
+    margin: 0;
+    text-align: center;
+    color: rgb(100, 100, 250);
+    text-shadow: 0.1em 0.1em 0.1em rgb(150, 150, 200),
+                 -0.1em -0.1em 0.1em rgb(50, 50, 100),
+                 0.1em 0.1em 0.1em rgb(100, 100, 150);
+}
+
+.no-textshadow .logo {
+    filter: dropshadow(color=#000000, offX=3, offY=3);
+}
+
+
+/* Style menu glownego. */
+#main-menu {
+    padding-top: 1em;
+}
+
+ul.menu {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+ul.menu li {
+    margin: 0.8em 0;
+}
+
+ul.menu li button {
+    font-size: 0.6em;
+    color: rgb(0, 110, 110);
+    width: 10em;
+    height: 1.5em;
+    background: rgb(0, 10, 20);
+    border: 0.1em solid rgb(0, 255, 255);
+    border-radius: 0.5em;
+    /* Nie wszystkie wlasciwosci CSS3 sa w pelni obslugiwane,
+    a wiele z nich dziala tylko po zastosowaniu tzw. "przedrostkow autorskich" (ang. "vendor prefixes"),
+    np. "-webkit" dla przegladarek skonstruowanych na silniku WebKit lub "-moz" dla Firefoksa. */
+    -webkit-box-shadow: 0.2em 0.2em 0.3em rgb(0, 0, 0);
+    -moz-box-shadow: 0.2em 0.2em 0.3em rgb(0, 0, 0);
+    box-shadow: 0.2em 0.2em 0.3em rgb(0, 0, 0);
+}
+
+ul.menu li button:hover {
+    background: rgb(0, 40, 40);
+}
+
+ul.menu li button:active {
+    color: rgb(0, 255, 255);
+    background: rgb(0, 40, 40);
+}
+
+/* Pasek postepu. */
+/* Wprowadzone zmianyt ukrywaja napis "Dalej". Pojawi sie on dopiero,
+ * gdy wszystkie potrzebne zasoby zostana zaladowane. */
+.progress {
+    margin: 0 auto;
+    width: 6em;
+    height: 0.5em;
+    border-radius: 0.5em;
+    overflow: hidden;
+    border: 1px solid rgb(100, 150, 200);
+}
+
+.progress .indicator {
+    background-color: rgb(100, 150, 200);
+    height: 100%;
+    width: 0%;
+}
+
+
+/* Tlo. */
+#game .background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+#game .background canvas {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Ekranu gry. */
+#game-screen .game-board {
+    position: relative;
+    width: 60%;
+    height: 60%;
+    /* Obrot ma zostac wykonany przy uzyciu trojwymiarowych transformacji w CSS. Wlasciwosci "rotateX()", "rotateY()" i "rotateZ()" obracaja dany element o podana w nich liczbe stopni wokol odpowiednich osi. Aby ten trojwymiarowy efekt jakos wygladal, nalezy dodac obrotowi glebi. Zrobisz to, formatujac element rodzica za pomoca wlasciwosci "-webkit-perspective". Mniejsze wartosci sprawia, ze efekt bedzie wygladal na bardziej plaski, podczas gdy wieksze uwydatnia glebie obrazu. */
+    -webkit-perspective: 16em;
+    display: block;
+    margin: 75px auto 0;
+}
+
+#game-screen .game-board-bg,
+#game-screen .game-board .board {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#game-screen .game-board .board {
+    z-index: 10;
+}
+
+#game-screen .game-board .board-bg {
+    z-index: 0;
+}
+
+#game-screen .game-board .dom-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#game-screen .game-board .dom-container .jewel {
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+}
+
+#game-screen .game-board .board-bg div {
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    background-color: rgba(225, 235, 255, 0.15);
+}
+
+/* Ekran gry - stan gry. */
+#game-screen .game-info {
+    width: 100%;
+    float: left;
+}
+
+#game-screen .game-info label {
+    display: inline-block;
+    height: 1.5em;
+    float: left;
+    font-size: 0.6em;
+    padding: 0.25em;
+}
+
+#game-screen .game-info .score {
+    float: right;
+    margin-right: 20px;
+}
+
+#game-screen .time {
+    height: 0.25em;
+    border-radius: 0.5em;
+}
+
+#game-screen .time .indicator {
+    width: 100%;
+}
+
+/* Ekran gry - ogloszenie zmiany stanu gry. */
+#game-screen .announcement {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -0.5em;
+    width: 100%;
+    color: rgb(75, 150, 150);
+    text-shadow: 0.03em 0.03em 0.03em rgb(0, 255, 255),
+                 -0.03em -0.03em 0.03em rgb(0, 255, 255),
+                 0.1em 0.15em 0.15em rgb(0, 0, 0);
+    text-align: center;
+    white-space: nowrap;
+    z-index: 20; /* Komunikat pojawi sie na pierwszym planie. */
+    opacity: 0; /* Komunikat bedzie na poczatku przezroczysty. */
+    cursor: default;
+}
+
+.no-textshadow #game-screen .announcement {
+    filter: glow(color = #00ffff, strength = 1),
+            dropshadow(color = #000000, offX = 3, offY = 3);
+}
+
+/* Animacja komunikatu. */
+/* Klatki kluczowe w przegladarce webkit. */
+/* W zaprezentowanym arkuszu zadeklarowalem animacje "zoomfade" posiadajaca trzy klatki kluczowe: "0%", "25%" i "100%". W trakcie wyswietlania pelnej animacji element jest skalowany z rozmiaru "0.5" do "1.5". Rowniez stopien przejrzystosci ulega zmianie, ale dopiero po odtworzeniu 1/4 animacji. Dzieki temu uzytkownik bedzie mial chwile na odczytanie tekstu, nim zniknie. Na koniec CSS powiazuje animacje z klasa "zoomfade" i ustala czas jej trwania na dwie sekundy. */
+@-webkit-keyframes zoomfade {
+    0% {
+        opacity: 1;
+        -webkit-transform: scale(0.5);
+    }
+    25% { /* Komunikat jest w pelni widoczny przez chwile. */
+        opacity: 1;
+    }
+    100% { /* Komunikat znika. */
+        opacity: 0;
+        -webkit-transform: scale(1.5);
+    }
+}
+
+/* Klasa odpowiedzialna za przejscie, zanikanie i skalowanie komunikatu. */
+@-moz-keyframes zoomfade {
+    0% {
+        opacity: 1;
+        -moz-transform: scale(0.5);
+    }
+    25% { /* Komunikat jest w pelni widoczny przez chwile. */
+        opacity: 1;
+    }
+    100% { /* Komunikat zanika. */
+        opacity: 0;
+        -moz-transform: scale(1.5);
+    }
+}
+
+/* Klasa zoomfade odpowiedzialna za przejscie, zanikanie i skalowanie komunikatu. */
+.zoomfade {
+    -webkit-animation-name: zoomfade;
+    -webkit-animation-duration: 2s;
+    -moz-animation-name: zoomfade;
+    -moz-animation-duration: 2s;
+}
+
+/* Tryb awaryjny dla przegladarek, ktore nie obsluguja animacji CSS. */
+.no-cssanimations #game-screen .announcement {
+    display: none;
+}
+
+.no-cssanimations #game-screen .announcement.active {
+    opacity: 1;
+    display: none;
+}
+
+/* Stopka na ekranie gry. */
+#game-screen footer {
+    display: block;
+    position: absolute;
+    bottom: 70px;
+    height: 1.25em;
+    width: 100%;
+}
+
+.screen footer button {
+    margin-left: 0.25em;
+    padding: 0 0.75em;
+    font-size: 0.5em;
+    color: rgba(100, 200, 200, 0.5);
+    background: rgb(0, 10, 20);
+    border: 1px solid rgba(100, 200, 200, 0.5);
+    border-radius: 0.2em;
+}
+
+/* Warstwa przyciemniajaca na ekranie gry. */
+#game-screen .pause-overlay {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(40, 40, 40, 0.5);
+}
+
+/* Rekordowe wyniki. */
+#highscore h2 {
+    margin-top: 0.2em;
+    font-size: 1.25em;
+}
+
+#highscore ol.score-list {
+    font-size: 0.65em;
+    width: 75%;
+    margin: 0 10%;
+}
+
+#highscore ol.score-list li {
+    width: 100%;
+}
+
+/* Dodane pozniej tresci zawieraja dwa elementy potomne "span": jeden na nazwe uzytkownika, a drugi na jego wynik. */
+#highscore ol.score-list li span:nth-child(1) {
+    display: inline-block;
+    width: 70%;
+}
+
+#highscore ol.score-list li span:nth-child(2) {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+}

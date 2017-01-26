@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="pl">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, user-scalable=no">
+    <!-- Ustawienie atrybutu "content" znacznika "apple-mobile-web-app-capable" na "yes" doprowadzi do tego, ze iOS uruchomi zachowana w zakladce strone jak program - w trybie pelnoekranowym, z wylaczonym interfejsem Safari. -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>MatchBalloons</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <!-- To zapytanie medialne gwarantuje, ze style z pliku "mobile.css" zostana nalozone tylko dla urzadzen szerokich co najwyzej na 768 pikseli w trybie portretowym. -->
+    <link rel="stylesheet" href="styles/mobile.css" media="screen and (max-width: 768px) and (orientation: portrait)" />
+    <script src="scripts/modernizr.js"></script>
+    <script src="scripts/loader.js"></script>
+    <script src="scripts/facebook.js"></script>
+</head>
+
+<body>
+    <div id="game">
+        <div class="background"></div>
+        <div class="screen" id="splash-screen">
+            <h1 class="logo">MatchBalloons</h1>
+            <br>
+            <div class="progress">
+                <div class="indicator"></div>
+            </div><span class="continue">Continue...</span> </div>
+        <div class="screen" id="main-menu">
+            <h2 class="logo">MatchBalloons</h2>
+            <ul class="menu">
+                <li>
+                    <button name="game-screen">Play</button>
+                </li>
+            </ul>
+        </div>
+        <div class="screen" id="game-screen">
+            <!-- Zwroc uwage, ze element "game-board" uzywa klasy "jewel-size", ktora zdefiniowales wczesniej. Klasa "jewel-size" definiuje wielkosc pojedynczego klejnotu poprzez zadeklarowanie w niej wlasciwosci "font-size". W tym celu uzyto jednostek "em". -->
+            <div class="game-board jewel-size">
+                <div class="announcement"></div>
+            </div>
+            <div class="game-info">
+                <label class="level">Level: <span></span></label>
+                <label class="score">Score: <span></span></label>
+            </div>
+            <div class="time progress">
+                <div class="indicator"></div>
+            </div>
+            <footer>
+                <button name="exit">Close</button>
+            </footer>
+            <div class="pause-overlay"></div>
+        </div>
+        <div id="jewel-proto" class="jewel-size"></div>
+    </div>
+</body>
+
+</html>

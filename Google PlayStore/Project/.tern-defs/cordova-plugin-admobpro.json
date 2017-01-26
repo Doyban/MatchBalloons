@@ -1,0 +1,46 @@
+{
+    "!name": "cordova-plugin-admobpro",
+    "!define": {
+        "!modules": {
+            "AdMob": {
+                "AD_SIZE": {
+                    "SMART_BANNER": "string",
+                    "BANNER": "string",
+                    "MEDIUM_RECTANGLE": "string",
+                    "FULL_BANNER": "string",
+                    "LEADERBOARD": "string",
+                    "SKYSCRAPER": "string"
+                },
+                "AD_POSITION": {
+                    "NO_CHANGE": "number",
+                    "TOP_LEFT": "number",
+                    "TOP_CENTER": "number",
+                    "TOP_RIGHT": "number",
+                    "LEFT": "number",
+                    "CENTER": "number",
+                    "RIGHT": "number",
+                    "BOTTOM_LEFT": "number",
+                    "BOTTOM_CENTER": "number",
+                    "BOTTOM_RIGHT": "number",
+                    "POS_XY": "number"
+                },
+                "getAdSettings": "fn(successCallback: ?, failureCallback: ?)",
+                "setOptions": "fn(options: ?, successCallback: ?, failureCallback: ?)",
+                "createBanner": "fn(args: ?, successCallback: ?, failureCallback: ?)",
+                "removeBanner": "fn(successCallback: ?, failureCallback: ?)",
+                "hideBanner": "fn(successCallback: ?, failureCallback: ?)",
+                "showBanner": "fn(position: number, successCallback: ?, failureCallback: ?)",
+                "showBannerAtXY": "fn(x: number, y: number, successCallback: ?, failureCallback: ?)",
+                "prepareInterstitial": "fn(args: ?, successCallback: ?, failureCallback: ?)",
+                "showInterstitial": "fn(successCallback: ?, failureCallback: ?)",
+                "isInterstitialReady": "fn(successCallback: ?, failureCallback: ?)",
+                "prepareRewardVideoAd": "fn(args: ?, successCallback: ?, failureCallback: ?)",
+                "showRewardVideoAd": "fn(successCallback: ?, failureCallback: ?)"
+            }
+        }
+    },
+    "!plugin-version": "2.20.1",
+    "window": {
+        "AdMob": "!modules.AdMob"
+    }
+}

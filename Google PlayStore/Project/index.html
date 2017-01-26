@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="pl">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Ustawienie atrybutu "content" znacznika "apple-mobile-web-app-capable" na "yes" doprowadzi do tego, ze iOS uruchomi zachowana w zakladce strone jak program - w trybie pelnoekranowym, z wylaczonym interfejsem Safari. -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="format-detection" content="telephone=no" />
+    
+    <!-- To avoid the warning of content security policy. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"/>
+    
+    <title>MatchBalloons</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <!-- To zapytanie medialne gwarantuje, ze style z pliku "mobile.css" zostana nalozone tylko dla urzadzen szerokich co najwyzej na 768 pikseli w trybie portretowym. -->
+    <link rel="stylesheet" href="styles/mobile.css" media="screen and (max-width: 768px) and (orientation: portrait)" />
+    <script src="scripts/modernizr.js"></script>
+    <script src="scripts/loader.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="cordova_plugins.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script src="scripts/facebook.js"></script>
+    <script type="text/javascript" src="js/SocialSharing.js"></script>
+    
+    <script src="js/admob.js"></script>
+    <!-- for your event code, see README and file comments for details -->
+    <script src="js/init-app.js"></script>
+    <!-- for your init code, see README and file comments for details -->
+    <script src="xdk/init-dev.js"></script>
+    <!-- normalizes device and document ready events, see file for details -->
+    <script src="js/util.js"></script>
+</head>
+
+<body onload="initApp()">
+  <!-- Ads. -->
+    <div id="fbad">
+        <div style="margin-top: 150px">
+        </div>
+        <div id="closebutton" onclick="removeAd()"></div>
+    </div>
+    <script>
+        var count = 0;
+        adCounter();
+        var intervalId = setInterval(adCounter, 1000);
+        var canClose = false;
+
+        function removeAd() {
+            if (canClose) {
+                document.body.removeChild(document.getElementById("fbad"));
+                AdMob.removeBanner();
+            }
+        }
+
+        function adCounter() {
+            if (count > 9) {
+                clearInterval(intervalId);
+                document.getElementById("closebutton").innerHTML = "Close ads and play game";
+                canClose = true;
+                return;
+            }
+            count++;
+            document.getElementById("closebutton").innerHTML = "Closing ads in " + (11 - count).toString() + " seconds";
+        }
+    </script>
+
+    <script>
+        function exitFromApp() {
+            navigator.app.exitApp();
+        }
+    </script>
+    
+    <script>
+        var admobid = {};
+
+        if( /(android)/i.test(navigator.userAgent) ) {
+            admobid = { // for Android
+                banner: 'ca-app-pub-4865595196880143/9897395315',
+                interstitial: 'ca-app-pub-6869992474017983/1657046752'
+            };
+          } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+            admobid = { // for iOS
+              banner: 'ca-app-pub-6869992474017983/4806197152',
+              interstitial: 'ca-app-pub-6869992474017983/7563979554'
+            };
+          } else {
+            admobid = { // for Windows Phone
+              banner: 'ca-app-pub-6869992474017983/8878394753',
+              interstitial: 'ca-app-pub-6869992474017983/1355127956'
+            };
+        }
+
+        function initApp() {
+          if (! AdMob ) { //alert( 'admob plugin not ready' ); 
+return; }
+
+          // this will create a banner on startup
+          AdMob.createBanner( {
+            adId: admobid.banner,
+            position: AdMob.AD_POSITION.BOTTOM_CENTER,
+            isTesting: false, // TODO: remove this line when release
+            overlap: true,
+            offsetTopBar: false
+          } );
+        }
+
+        if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
+            document.addEventListener('deviceready', initApp, false);
+        } else {
+            initApp();
+        }
+    </script>
+
+    <div id="game">
+        <div id="fb-root"></div>
+        <div class="background"></div>
+        <div class="screen" id="splash-screen">
+            <h1 class="logo">MatchBalloons</h1>
+            <br>
+            <div class="progress">
+                <div class="indicator"></div>
+            </div><span class="continue">Continue...</span> </div>
+        <div class="screen" id="main-menu">
+            <h2 class="logo">MatchBalloons</h2>
+            <ul class="menu">
+<!--
+                <button onclick="createBanner()">Create Banner Ad</button>
+                <button onclick="showBanner()">Show Banner Ad</button>
+-->
+                <li>
+                    <button name="game-screen">Play</button>
+                </li>
+                <li>
+                    <button name="invite">Invite friends</button>
+                </li>
+                <li>
+                    <button name="share" onclick="window.plugins.socialsharing.share('Play MatchBallons!', 'Play MatchBallons!', 'https://doyban.com/facebook/matchballoons/images/logo.png', 'https://doyban.com/matchballoons/')">Share</button>
+                </li>
+                <li>
+                    <button name="exit" onclick="exitFromApp()">Exit</button>
+                </li>
+            </ul>
+        </div>
+        <div id="ads"></div>
+        <div class="screen" id="game-screen">
+            <!-- Zwroc uwage, ze element "game-board" uzywa klasy "jewel-size", ktora zdefiniowales wczesniej. Klasa "jewel-size" definiuje wielkosc pojedynczego klejnotu poprzez zadeklarowanie w niej wlasciwosci "font-size". W tym celu uzyto jednostek "em". -->
+            <div class="game-board jewel-size">
+                <div class="announcement"></div>
+            </div>
+            <div class="game-info">
+                <label class="level">Level: <span></span></label>
+                <label class="score">Score: <span></span></label>
+            </div>
+            <div class="time progress">
+                <div class="indicator"></div>
+            </div>
+            <footer>
+                <button name="exit">Close</button>
+            </footer>
+            <div class="pause-overlay"></div>
+        </div>
+        <div class="screen" id="highscore">
+            <h2 class="logo">Highscores</h2>
+            <ol class="score-list"></ol>
+            <footer>
+                <button name="back">Menu</button>
+            </footer>
+        </div>
+        <div id="jewel-proto" class="jewel-size"></div>
+    </div>
+</body>
+
+</html>

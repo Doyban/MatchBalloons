@@ -1,0 +1,321 @@
+{
+  "project": {
+    "projectSettingsVersion": "3.0.0",
+    "creationData": {
+      "type": "Import",
+      "projectTypeName": "com.intel.xdk.projecttype.jsapp",
+      "src": "",
+      "projectGuid": "2d062ba4-8514-4a0a-a9f9-0be3a3253cb4",
+      "lastModifiedDate": 1476115907798,
+      "creationDate": 1472574110785
+    },
+    "sourceDirectory": "",
+    "cordovaPluginsDirectory": "plugins",
+    "gameAssetDirectory": "asset",
+    "gameMetadata": {
+      "gameEngineName": "canvas",
+      "gameEngineVersion": ""
+    },
+    "testDirectory": "test",
+    "startFile": "index.html",
+    "projectTags": [
+      "XDK-game-app",
+      "XDK-disallow-legacy-whitelist"
+    ],
+    "projectFiles": {
+      "xdk-publish-meta-data.json": {
+        "settings": {
+          "project": {
+            "XDK-not-deployed": "True"
+          }
+        }
+      }
+    },
+    "projectDirectories": {
+      "xdk": {
+        "settings": {
+          "project": {
+            "XDK-generated": "true"
+          }
+        }
+      }
+    },
+    "libraries": [],
+    "cordovaPlugins": [
+      {
+        "id": "cordova-plugin-admobpro",
+        "name": "AdMob Plugin Pro",
+        "version": "2.20.1",
+        "originType": "cordova.io",
+        "origin": "cordova-plugin-admobpro",
+        "gitref": "",
+        "paramvals": {},
+        "sourceLocation": "plugins/cordova-plugin-admobpro",
+        "selectedState": "Included",
+        "checksum": "2c1246d0",
+        "dependsOn": [
+          "cordova-plugin-extension"
+        ],
+        "topLevel": true,
+        "cordovaVersion": ">=3.0",
+        "author": "Liming Xie",
+        "permissions": {
+          "android:name": [
+            "android.permission.INTERNET",
+            "android.permission.ACCESS_NETWORK_STATE"
+          ]
+        },
+        "description": "Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.",
+        "data": {},
+        "dependedBy": [],
+        "custom": "true"
+      },
+      {
+        "id": "cordova-plugin-extension",
+        "name": "Cordova Plugin Extension",
+        "version": "1.5.1",
+        "originType": "cordova.io",
+        "origin": "cordova-plugin-extension",
+        "gitref": "",
+        "paramvals": {},
+        "sourceLocation": "plugins/cordova-plugin-extension",
+        "selectedState": "Included",
+        "checksum": "6a59c1f1",
+        "dependsOn": [],
+        "topLevel": false,
+        "cordovaVersion": ">=3.0",
+        "author": "Liming Xie",
+        "permissions": {},
+        "description": "Common interface and reusable code, as dependency of other plugins",
+        "data": {},
+        "dependedBy": [
+          "cordova-plugin-admobpro"
+        ],
+        "custom": "true"
+      },
+      {
+        "id": "cordova-plugin-whitelist",
+        "name": "Whitelist",
+        "version": "1.3.1-dev",
+        "originType": "repo",
+        "origin": "https://github.com/apache/cordova-plugin-whitelist.git",
+        "gitref": "",
+        "subdir": ".",
+        "paramvals": {},
+        "sourceLocation": "plugins/cordova-plugin-whitelist",
+        "selectedState": "Included",
+        "checksum": "3e0d25e",
+        "dependsOn": [],
+        "topLevel": true,
+        "cordovaVersion": ">=3.0",
+        "permissions": {},
+        "description": "Cordova Network Whitelist Plugin",
+        "data": {},
+        "dependedBy": [],
+        "custom": "true"
+      }
+    ],
+    "serviceMethods": [],
+    "buildConfigurations": {
+      "Android": {
+        "platform_": "android",
+        "runtime_": "Crosswalk with Cordova 3.x",
+        "name_": "Android",
+        "preferences_": {
+          "android-minSdkVersion": "14",
+          "android-targetSdkVersion": "23",
+          "android-installLocation": "auto",
+          "android-signed": true
+        },
+        "isActive_": true,
+        "certificateId_": "CusQgjdhVUempV9rxj4G8w2",
+        "appName_": "MatchBalloons",
+        "appID_": "not.yet.specified",
+        "appAccess_": {
+          "mode": "whitelist",
+          "network": [
+            "*"
+          ],
+          "intents": [],
+          "navigation": []
+        },
+        "icons_": [],
+        "splashes_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
+        "appVersion_": "0.0.1",
+        "appVersionCode_": "1",
+        "crosswalkVersion_": "19",
+        "cordovaCLIVersion_": "5.4.1"
+      },
+      "iOS": {
+        "platform_": "ios",
+        "runtime_": "Cordova 3.x",
+        "name_": "iOS",
+        "preferences_": {
+          "deployment-target": "8.0",
+          "ios-configuration": "adhoc"
+        },
+        "isActive_": true,
+        "certificateId_": "",
+        "appName_": "MatchBalloons",
+        "appID_": "not.yet.specified",
+        "appAccess_": {
+          "mode": "whitelist",
+          "network": [
+            "*"
+          ],
+          "intents": [],
+          "navigation": []
+        },
+        "icons_": [],
+        "splashes_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
+        "appVersion_": "0.0.1",
+        "cordovaCLIVersion_": "5.4.1",
+        "iosProvs_": []
+      },
+      "Windows8": {
+        "platform_": "windows8",
+        "runtime_": "Cordova 3.x",
+        "name_": "Windows8",
+        "preferences_": {},
+        "isActive_": true,
+        "certificateId_": "",
+        "appName_": "MatchBalloons",
+        "appID_": "not.yet.specified",
+        "appAccess_": {
+          "mode": "whitelist",
+          "network": [
+            "*"
+          ],
+          "intents": [],
+          "navigation": []
+        },
+        "icons_": [],
+        "splashes_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
+        "appVersion_": "0.0.0.1",
+        "cordovaCLIVersion_": "5.4.1"
+      },
+      "WebApp": {
+        "platform_": "webapp",
+        "runtime_": "W3C",
+        "name_": "WebApp",
+        "preferences_": {},
+        "isActive_": false,
+        "certificateId_": "",
+        "appName_": "MatchBalloons",
+        "appID_": "not.yet.specified",
+        "appAccess_": {
+          "mode": "whitelist",
+          "network": [
+            "*"
+          ],
+          "intents": [],
+          "navigation": []
+        },
+        "icons_": [],
+        "splashes_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
+        "appVersion_": "0.0.1"
+      },
+      "Firefox": {
+        "platform_": "firefoxos",
+        "runtime_": "W3C on Firefox OS",
+        "name_": "Firefox",
+        "preferences_": {},
+        "isActive_": false,
+        "certificateId_": "",
+        "appName_": "MatchBalloons",
+        "appID_": "not.yet.specified",
+        "appAccess_": {
+          "mode": "whitelist",
+          "network": [
+            "*"
+          ],
+          "intents": [],
+          "navigation": []
+        },
+        "icons_": [],
+        "splashes_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
+        "appVersion_": "0.0.1"
+      },
+      "Chrome": {
+        "platform_": "chromeos",
+        "runtime_": "W3C on Chrome OS",
+        "name_": "Chrome",
+        "preferences_": {},
+        "isActive_": false,
+        "certificateId_": "",
+        "appName_": "MatchBalloons",
+        "appID_": "not.yet.specified",
+        "appAccess_": {
+          "mode": "whitelist",
+          "network": [
+            "*"
+          ],
+          "intents": [],
+          "navigation": []
+        },
+        "icons_": [],
+        "splashes_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
+        "appVersion_": "0.0.1"
+      },
+      "Facebook": {
+        "platform_": "facebook",
+        "runtime_": "W3C on Facebook",
+        "name_": "Facebook",
+        "preferences_": {},
+        "isActive_": false,
+        "certificateId_": "",
+        "appName_": "MatchBalloons",
+        "appID_": "not.yet.specified",
+        "appAccess_": {
+          "mode": "whitelist",
+          "network": [
+            "*"
+          ],
+          "intents": [],
+          "navigation": []
+        },
+        "icons_": [],
+        "splashes_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
+        "appVersion_": "0.0.1"
+      },
+      "WP81": {
+        "platform_": "wp81",
+        "runtime_": "Cordova 3.x",
+        "name_": "WP81",
+        "preferences_": {},
+        "isActive_": true,
+        "certificateId_": "",
+        "appName_": "MatchBalloons",
+        "appID_": "not.yet.specified",
+        "appAccess_": {
+          "mode": "whitelist",
+          "network": [
+            "*"
+          ],
+          "intents": [],
+          "navigation": []
+        },
+        "icons_": [],
+        "splashes_": [],
+        "addlPermissions_": "",
+        "excludedLibraries_": "",
+        "appVersion_": "0.0.0.1",
+        "cordovaCLIVersion_": "5.4.1"
+      }
+    }
+  }
+}
